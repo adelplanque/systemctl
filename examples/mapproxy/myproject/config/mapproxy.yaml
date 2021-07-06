@@ -1,0 +1,36 @@
+services:
+  demo:
+  wmts:
+  tms:
+  wms:
+    srs: ['EPSG:3857', 'EPSG:2154', 'EPSG:4326' ]
+    image_formats: ['image/jpeg', 'image/png']
+    md:
+      title: OpenStreetMap Map Proxy
+
+layers:
+  - name: OsmStandard
+    title: Osm Standard Map
+    sources: [osm_standard_map]
+
+caches:
+  osm_standard_map:
+    sources: [osm_standard]
+    grids: [pseudo_mercator]
+    cache:
+      type: redis
+      host: localhost
+      port: {{redis_port}}
+      default_ttl: 600
+
+sources:
+  osm_standard:
+    type: tile
+    grid: pseudo_mercator
+    url: http://b.tile.openstreetmap.org/%(z)s/%(x)s/%(y)s.png
+
+grids:
+  pseudo_mercator:
+    srs: 'EPSG:3857'
+    origin: nw
+    num_levels: 19

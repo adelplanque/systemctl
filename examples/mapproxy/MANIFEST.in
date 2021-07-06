@@ -1,0 +1,3 @@
+include myproject/config/*.yaml
+include myproject/config/*.conf
+include myproject/config/*.ini
